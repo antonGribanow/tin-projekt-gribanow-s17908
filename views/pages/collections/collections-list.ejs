@@ -1,0 +1,48 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>Lista kolekcji</h2>
+    <table class="table-list">
+        <thead>
+        <tr>
+            <th>Dane użytkownika</th>
+            <th>Nazwa gry</th>
+            <th>Ograniczenie czasowe</th>
+            <th>Data zakupu</th>
+            <th>Czas dostępu (w dniach)</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let collections of collection) { %>
+            <tr>
+                <td><%= collections.user.userName + ' ' + collections.user.userSurname %></td>
+                <td><%= collections.game.gameName %></td>
+                <td><%= collections.timeConstraint == true ? 'TAK' : 'NIE' %></td>
+                <td><%= collections.purchaseDate.toISOString().split('T')[0] %></td>
+                <td><%= collections.timeOfAccess %></td>
+                <td>
+                    <ul class="list-actions">
+                        <li>
+                            <a href="collections-list/details/<%= collections._id %>"
+                               class="list-actions-button-details">Szczegóły</a>
+                        </li>
+                        <li>
+                            <a href="collections-list/modify/<%= collections._id %>"
+                               class="list-actions-button-edit">Edytuj</a>
+                        </li>
+                        <li>
+                            <a href="collections-list/delete/<%= collections._id %>"
+                               class="list-actions-button-delete">Usuń</a>
+                        </li>
+                    </ul>
+                </td>
+
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <div class="form-buttons">
+        <p><a href="collections-list/add" class="button-add">Dodaj nowy zakup</a></p>
+    </div>
+</main>
+<%- include('../../fragments/footer.ejs') %>

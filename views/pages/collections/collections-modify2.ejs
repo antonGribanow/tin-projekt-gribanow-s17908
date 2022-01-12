@@ -1,0 +1,45 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>Edytuj kolekcję</h2>
+    <form class="form">
+        <!--        <div class="form-group">-->
+        <label for="user">Użytkownik:<abbr title="required"
+                                           aria-label="required">*</abbr></label>
+        <select id="user" name="user">
+            <OPTION Value="1111111" selected>Mariusz Pudzianowski mariusz@hotstuff.com</OPTION>
+            <OPTION Value="2222222">Beata Tyszkiewicz tyszkiewiczb@o2.pl</OPTION>
+        </select>
+
+        <label for="game">Gra:<abbr title="required" aria-label="required">*</abbr></label>
+        <select id="game" name="game">
+            <OPTION Value="121212" selected>Red Dead Redemption II</OPTION>
+            <OPTION Value="212121">Dark Souls III</OPTION>
+        </select>
+
+        <!--        <div class="form-group">-->
+        <label for="timeConstraint">Ograniczenie czasowe wypożyczenia:<abbr title="required"
+                                                                            aria-label="required">*</abbr></label>
+        <select id="timeConstraint" name="timeConstraint">
+            <OPTION Value="TAK" selected>TAK</OPTION>
+            <OPTION Value="NIE">NIE</OPTION>
+        </select>
+
+        <label for="purchaseDate">Data zakupu:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="date" name="purchaseDate" value="2020-11-11" id="purchaseDate" >
+        <!--        </div>-->
+
+        <!--        <div class="form-group">-->
+
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+        <label for="timeOfAccess">Czas dostępu (w dniach):<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="timeOfAccess" value="30" id="timeOfAccess">
+
+
+        <div class="form-buttons">
+            <a href="/collections-list" class="form-button-submit">Zapisz</a>
+            <a href="/collections-list" class="form-button-cancel">Powrót</a>
+        </div>
+    </form>
+</main>
+<%- include('../../fragments/footer.ejs') %>

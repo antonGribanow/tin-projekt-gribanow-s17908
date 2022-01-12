@@ -1,0 +1,36 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>Szczegóły kolekcji</h2>
+    <form class="form">
+        <!--                <div class="form-group">-->
+        <label for="name">Imię i nazwisko użytkownika<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="name" value="Mariusz Pudzianowski" id="name" disabled>
+
+        <label for="email">Adres email:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="email" value="mariusz@hotstuff.com" id="email" disabled>
+
+        <label for="game">Nazwa gry:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="game" value="Red Dead Redemption II" id="game" disabled>
+        <!--                </div>-->
+        <!--                <div class="form-group">-->
+        <label for="timeConstraint">Ograniczenie czasowe:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="timeConstraint" value="TAK" id="timeConstraint" disabled>
+        <!--                </div>-->
+        <!--                <div class="form-group">-->
+        <label for="dayOfPurchase">Data zakupu:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="dayOfPurchase" value="11-11-2020" id="dayOfPurchase" disabled>
+        <!--                </div>-->
+        <!--                <div class="form-group">-->
+        <label for="timeOfAccess">Czas dostępu (w dniach):<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="timeOfAccess" value="20" id="timeOfAccess" disabled>
+        <!--                </div>-->
+
+
+        <div class="form-buttons">
+            <a href="modify" class="form-button-submit">Edytuj</a>
+            <input class="form-button-cancel" type="submit" value="Usuń"/>
+
+        </div>
+    </form>
+</main>
+<%- include('../../fragments/footer.ejs') %>

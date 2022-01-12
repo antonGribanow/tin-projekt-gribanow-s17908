@@ -1,0 +1,92 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <script type="application/javascript" src="../../js/validationGameForm.js"></script>
+    <h2><%= pageTitle %></h2>
+<!--    <form class="formF" method="post" action="<%= formAction %>" novalidate>-->
+    <form class="formF" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+        <!--        <div class="form-group">-->
+        <input type="hidden" name="_id" value="<%= game._id %>">
+
+        <label for="gameName"
+               class="<%= validationErrors.find(e => e.path.includes('gameName')) ? 'error-input' : '' %>">Nazwa
+            gry:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="gameName" id="gameName" placeholder="np. FIFA 11" value="<%= game.gameName %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span id="errorGameName" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('gameName'))) { %>
+                <%= validationErrors.find(e => e.path.includes('gameName')).message %>
+            <% } %>
+        </span>
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+        <label for="licenceCode"
+               class="<%= validationErrors.find(e => e.path.includes('licenceCode')) ? 'error-input' : '' %>">Licencja
+            gry:<abbr
+                    title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="licenceCode" id="licenceCode" placeholder="np. 123456789"
+               value="<%= game.licenceCode %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span id="errorLicenceCode" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('licenceCode'))) { %>
+                <%= validationErrors.find(e => e.path.includes('licenceCode')).message %>
+            <% } %>
+        </span>
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+        <label for="ageRestriction">Ograniczenie wiekowe:<abbr title="required" aria-label="required">*</abbr></label>
+        <select id="ageRestriction" name="ageRestriction"
+                class="<%= validationErrors.find(e => e.path.includes('ageRestriction')) ? 'error-input' : '' %>"
+                <%= (formMode == 'showDetails' || formMode == 'delete') ? 'disabled' : '' %>>
+            <OPTION value="">---Wybierz---</OPTION>
+            <OPTION value="true" <%= game.ageRestriction === "true" || game.ageRestriction === true ? 'selected' : '' %>>TAK
+            </OPTION>
+            <OPTION value="false" <%= game.ageRestriction === "false" || game.ageRestriction === false ? 'selected' : '' %>>NIE
+            </OPTION>
+        </select>
+        <span id="errorAgeRestriction" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('ageRestriction'))) { %>
+                <%= validationErrors.find(e => e.path.includes('ageRestriction')).message %>
+            <% } %>
+        </span>
+        <div class="form-buttons">
+            <p id="errorSummary" class="errors-text"></p>
+            <% if (formMode != 'showDetails') { %>
+                <!--        <input class="form-button-submit" type="submit" value="Dodaj"/>-->
+                <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
+                <a class="form-button-cancel" href="/games-list">Anuluj</a>
+            <% } else { %>
+                <a class="form-button-cancel" href="/games-list">Powrót</a>
+            <% } %>
+        </div>
+    </form>
+    <% if (formMode == 'showDetails') { %>
+
+        <h2>Użytkownicy posiadający grę</h2>
+        <table class="table-list">
+            <thead>
+            <tr>
+                <th>Imię użytkownika</th>
+                <th>Nazwisko użytkownika</th>
+                <th>Ograniczenie czasowe</th>
+                <th>Rozpoczęcie dostępu</th>
+                <th>Czas dostępu (w dniach)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (let g of game.collections) { %>
+                <tr>
+                    <td><%= g.user.userName %></td>
+                    <td><%= g.user.userSurname %></td>
+                    <td><%= g.timeConstraint == 'true' ? 'TAK' : 'NIE' %></td>
+                    <td><%= g.purchaseDate.toISOString().split('T')[0] %></td>
+                    <td><%= g.timeOfAccess %></td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    <% } %>
+
+    <!--        </div>-->
+
+</main>
+<%- include('../../fragments/footer.ejs') %>

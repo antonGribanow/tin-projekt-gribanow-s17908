@@ -1,0 +1,116 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <script type="application/javascript" src="../../js/validationUserForm.js"></script>
+    <h2><%= pageTitle %></h2>
+<!--    <form class="formF" method="post" action="<%= formAction %>" novalidate>-->
+    <form class="formF" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+        <!--        <div class="form-group">-->
+        <input type="hidden" name="_id" value="<%= user._id %>">
+
+        <label for="userName">Imię użytkownika:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="userName" id="userName" placeholder="np. Zbigniew" value="<%= user.userName %>"
+               class="<%= validationErrors.find(e => e.path.includes('userName')) ? 'error-input' : '' %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span id="errorUserName" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('userName'))) { %>
+                <%= validationErrors.find(e => e.path.includes('userName')).message %>
+            <% } %>
+        </span>
+        <!--        </div>-->
+
+        <!--        <div class="form-group">-->
+        <label for="userSurname">Nazwisko użytkownika:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="userSurname" id="userSurname" placeholder="np. Stonoga" value="<%= user.userSurname %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>
+               class="<%= validationErrors.find(e => e.path.includes('userSurname')) ? 'error-input' : '' %>"/>
+        <span id="errorUserSurname" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('userSurname'))) { %>
+                <%= validationErrors.find(e => e.path.includes('userSurname')).message %>
+            <% } %>
+        </span>
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+
+
+        <label for="premiumSub">Subskrypcja premium:<abbr title="required" aria-label="required">*</abbr></label>
+        <select id="premiumSub" name="premiumSub"
+                class="<%= validationErrors.find(e => e.path.includes('premiumSub')) ? 'error-input' : '' %>"
+                <%= (formMode == 'showDetails' || formMode == 'delete') ? 'disabled' : '' %>>
+            <OPTION value="">---Wybierz---</OPTION>
+            <OPTION value="true" <%= (user.premiumSub === "true" || user.premiumSub === true) ? 'selected' : '' %>>TAK
+            </OPTION>
+            <OPTION value="false" <%= (user.premiumSub === "false" || user.premiumSub === false) ? 'selected' : '' %> >NIE
+            </OPTION>
+        </select>
+        <span id="errorPremiumSub" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('premiumSub'))) { %>
+                <%= validationErrors.find(e => e.path.includes('premiumSub')).message %>
+            <% } %>
+        </span>
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+        <label for="emailAddress">Adres email:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="email" name="emailAddress" id="emailAddress" placeholder="np. stonoga@gmail.com"
+               class="<%= validationErrors.find(e => e.path.includes('emailAddress')) ? 'error-input' : '' %>"
+               value="<%= user.emailAddress %>" <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span id="errorEmailAddress" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('emailAddress'))) { %>
+                <%= validationErrors.find(e => e.path.includes('emailAddress')).message %>
+            <% } %>
+        </span>
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+
+        <label for="userBirthDate">Data urodzenia użytkownika:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="date" name="userBirthDate" id="userBirthDate"
+               class="<%= validationErrors.find(e => e.path.includes('userBirthDate')) ? 'error-input' : '' %>"
+        <% if ((formMode == 'showDetails' || formMode == 'delete' || formMode == 'edit') && user.userBirthDate != null){ %>
+            <% var d = new Date(user.userBirthDate) %>
+               value="<%= d.toISOString().split('T')[0] %>"
+        <% } else { %>
+               value="<%= user.userBirthDate %>"
+                <% } %>
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span id="errorUserBirthDate" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('userBirthDate'))) { %>
+                <%= validationErrors.find(e => e.path.includes('userBirthDate')).message %>
+            <% } %>
+        </span>
+        <!--        </div>-->
+
+
+        <div class="form-buttons">
+            <p id="errorSummary" class="errors-text"></p>
+            <% if (formMode != 'showDetails') { %>
+                <input type="submit" class="form-button-submit" value="<%= btnLabel %>"/>
+                <a href="/users-list" class="form-button-cancel">Anuluj</a>
+            <% } else { %>
+                <a class="form-button-cancel" href="/users-list">Powrót</a>
+            <% } %>
+        </div>
+    </form>
+    <% if (formMode == 'showDetails') { %>
+        <h2>Gry użytkownika</h2>
+        <table class="table-list">
+            <thead>
+            <tr>
+                <th>Nazwa gry</th>
+                <th>Ograniczenie czasowe</th>
+                <th>Rozpoczęcie dostępu</th>
+                <th>Czas dostępu (w dniach)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (let e of user.collections) { %>
+                <tr>
+                    <td><%= e.game.gameName %></td>
+                    <td><%= e.timeConstraint == true ? 'TAK' : 'NIE' %></td>
+                    <td><%= e.purchaseDate.toISOString().split('T')[0] %></td>
+                    <td><%= e.timeOfAccess %></td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    <% } %>
+</main>
+<%- include('../../fragments/footer.ejs') %>

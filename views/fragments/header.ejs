@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Shop Demo</title>
+</head>
+<body>
+<header>
+    <h1>Game Shop</h1>
+    <img src="/images/logo.jpg" style= "width: 200px;"alt="Game Shop logo">
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="application/javascript" src="/js/validationCommon.js"></script>
+    <% switch (navLocation) { case 'user' : %>
+    <script type="application/javascript" src="/js/validationUserForm.js"></script>
+    <% break; case 'game' : %>
+    <script type="application/javascript" src="/js/validationGameForm.js"></script>
+    <% break; case 'collection' : %>
+    <script type="application/javascript" src="/js/validationCollectionForm.js"></script>
+    <% break; } %>
+
+</header>
+<nav>
+    <ul>
+        <li><a href="/" class="<%= navLocation == 'main' ? 'active' : '' %>">Strona główna</a></li>
+        <li><a href="/games-list" class="<%= navLocation == 'game' ? 'active' : '' %>">Gry</a></li>
+        <li><a href="/users-list" class="<%= navLocation == 'user' ? 'active' : '' %>">Użytkownicy</a></li>
+        <li><a href="/collections-list" class="<%= navLocation == 'collection' ? 'active' : '' %>">Kolekcja</a></li>
+    </ul>
+</nav>

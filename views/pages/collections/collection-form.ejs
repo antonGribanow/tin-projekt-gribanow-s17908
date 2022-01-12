@@ -1,0 +1,118 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <script type="application/javascript" src="../../js/validationCollectionForm.js"></script>
+    <h2><%= pageTitle %></h2>
+<!--    <form class="formF" method="post" action="<%= formAction %>" novalidate>-->
+    <form class="formF" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+        <input type="hidden" name="_id" value="<%= collection._id %>">
+
+        <label for="user_id">Użytkownik:<abbr title="required" aria-label="required">*</abbr></label>
+        <select id="user_id" name="user_id" required <%= (formMode == 'showDetails') ? 'disabled' : '' %>
+                class="<%= validationErrors.find(e => e.path.includes('user_id')) ? 'error-input' : '' %>">
+
+            <option value="" selected>--- Wybierz użytkownika ---</option>
+
+            <% for (let i = 0; i < allUsers.length; i++) { let user = allUsers[i]; %>
+            <% if (formMode == 'edit' || formMode == 'showDetails') { %>
+                <option value="<%= user._id %>"
+                        label="<%= user.userName + ' ' + user.userSurname + ' ' + user.emailAddress %>" <%= (collection._id &&
+                        user._id == collection.user_id) ? 'selected' : '' %>></option>
+            <% } else { %>
+                <option value="<%= user._id %>"
+                        label="<%= user.userName + ' ' + user.userSurname + ' ' + user.emailAddress %>"
+                        <%= (user._id == collection.user_id) ? 'selected' : '' %>></option>
+            <% } %>
+            <% } %>
+        </select>
+
+        <span id="errorUser_id" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('user_id'))) { %>
+                <%= validationErrors.find(e => e.path.includes('user_id')).message %>
+            <% } %>
+        </span>
+
+        <label for="game_id">Gra:<abbr title="required" aria-label="required">*</abbr></label>
+        <select id="game_id" name="game_id" required <%= (formMode == 'showDetails') ? 'disabled' : '' %>
+                class="<%= validationErrors.find(e => e.path.includes('game_id')) ? 'error-input' : '' %>">
+            <option value="" selected>--- Wybierz grę ---</option>
+
+            <% for (let i = 0; i < allGames.length; i++) { let game = allGames[i]; %>
+            <% if (formMode == 'edit' || formMode == 'showDetails') { %>
+                <option value="<%= game._id %>"
+                        label="<%= game.gameName %>" <%= (collection._id &&
+                        game._id == collection.game_id) ? 'selected' : '' %>></option>
+            <% } else { %>
+                <option value="<%= game._id %>"
+                        label="<%= game.gameName %>"
+                        <%= (game._id == collection.game_id) ? 'selected' : '' %>></option>
+            <% } %>
+            <% } %>
+        </select>
+
+        <span id="errorGame_id" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('game_id'))) { %>
+                <%= validationErrors.find(e => e.path.includes('game_id')).message %>
+            <% } %>
+        </span>
+
+        <!--        <div class="form-group">-->
+        <label for="timeConstraint">Ograniczenie czasowe:<abbr title="required" aria-label="required">*</abbr></label>
+        <select id="timeConstraint" name="timeConstraint" <%= (formMode == 'showDetails') ? 'disabled' : '' %>
+                class="<%= validationErrors.find(e => e.path.includes('timeConstraint')) ? 'error-input' : '' %>"
+                <%= (formMode == 'showDetails' || formMode == 'delete') ? 'disabled' : '' %>>
+            <OPTION value="" selected>---Wybierz---</OPTION>
+            <option value="true" <%= collection.timeConstraint === "true" || collection.timeConstraint === true ? 'selected' : '' %>>TAK</option>
+            <option value="false" <%= collection.timeConstraint === "false" || collection.timeConstraint === false ? 'selected' : '' %> value="false">NIE</option>
+        </select>
+        <span id="errorTimeConstraint" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('timeConstraint'))) { %>
+                <%= validationErrors.find(e => e.path.includes('timeConstraint')).message %>
+            <% } %>
+        </span>
+        <!--        </div>-->
+
+        <!--        <div class="form-group">-->
+
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+        <label for="purchaseDate">Data zakupu:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="date" name="purchaseDate" id="purchaseDate"
+               class="<%= validationErrors.find(e => e.path.includes('purchaseDate')) ? 'error-input' : '' %>"
+        <% if((formMode == 'showDetails' || formMode == 'delete' || formMode == 'edit') && collection.purchaseDate != null){ %>
+            <% var d = new Date(collection.purchaseDate) %>
+               value="<%= d.toISOString().split('T')[0] %>"
+        <% } else { %>
+               value="<%= collection.purchaseDate %>"
+                <% } %>
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span id="errorPurchaseDate" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('purchaseDate'))) { %>
+                <%= validationErrors.find(e => e.path.includes('purchaseDate')).message %>
+            <% } %>
+        </span>
+
+        <label for="timeOfAccess">Czas dostępu (w dniach):<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="timeOfAccess" id="timeOfAccess" placeholder="np. 20"
+               class="<%= validationErrors.find(e => e.path.includes('timeOfAccess')) ? 'error-input' : '' %>"
+               value="<%= collection.timeOfAccess %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>>
+        <span id="errorTimeOfAccess" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('timeOfAccess'))) { %>
+                <%= validationErrors.find(e => e.path.includes('timeOfAccess')).message %>
+            <% } %>
+        </span>
+        <!--        </div>-->
+
+
+        <div class="form-buttons">
+            <p id="errorSummary" class="errors-text"></p>
+            <% if (formMode != 'showDetails') { %>
+                <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
+                <a class="form-button-cancel" href="/collections-list">Anuluj</a>
+            <% } else { %>
+                <a class="form-button-cancel" href="/collections-list">Powrót</a>
+            <% } %>
+        </div>
+    </form>
+</main>
+<%- include('../../fragments/footer.ejs') %>

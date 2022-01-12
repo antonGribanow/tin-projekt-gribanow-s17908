@@ -1,0 +1,27 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>Edytuj grę</h2>
+    <form class="form">
+        <!--        <div class="form-group">-->
+        <label for="gameName">Nazwa gry:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="gameName" value="The Sims 3" id="gameName">
+        <!--        </div>-->
+
+        <!--        <div class="form-group">-->
+        <label for="licenceCode">Licencja gry:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="licenceCode" value="69420123" id="licenceCode">
+        <!--        </div>-->
+        <!--        <div class="form-group">-->
+        <label for="ageRestriction">Ograniczenie wiekowe:<abbr title="required" aria-label="required">*</abbr></label>
+        <select id="ageRestriction" name="ageRestriction">
+            <OPTION Value="TAK" selected>TAK</OPTION>
+            <OPTION Value="NIE">NIE</OPTION>
+        </select>
+        <!--        </div>-->
+        <div class="form-buttons">
+            <a href="/games-list" class="form-button-submit">Zapisz</a>
+            <a href="/games-list" class="form-button-cancel">Powrót</a>
+        </div>
+    </form>
+</main>
+<%- include('../../fragments/footer.ejs') %>

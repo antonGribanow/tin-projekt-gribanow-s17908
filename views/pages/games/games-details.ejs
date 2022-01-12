@@ -1,0 +1,84 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>Szczegóły gry</h2>
+    <form class="form">
+        <!--                <div class="form-group">-->
+        <label for="gameName">Nazwa gry:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="gameName" value="The Sims 3" id="gameName" disabled>
+        <!--                </div>-->
+
+        <!--                <div class="form-group">-->
+        <label for="licenceCode">Licencja gry:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="licenceCode" value="69420123" id="licenceCode" disabled>
+        <!--                </div>-->
+        <!--                <div class="form-group">-->
+        <label for="ageRestriction">Ograniczenie wiekowe:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="ageRestriction" value="NIE" id="ageRestriction" disabled>
+        <!--                </div>-->
+
+        <div class="form-buttons">
+            <a href="modify" class="form-button-submit">Edytuj</a>
+            <input class="form-button-cancel" type="submit" value="Usuń"/>
+        </div>
+    </form>
+
+    <h2>Użytkownicy posiadający grę</h2>
+    <table class="table-list">
+        <thead>
+        <tr>
+            <th>Imię użytkownika</th>
+            <th>Nazwisko użytkownika</th>
+            <th>Ograniczenie czasowe</th>
+            <th>Rozpoczęcie dostępu</th>
+            <th>Zakończenie dostępu</th>
+            <th>Czas dostępu (w dniach)</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Mariusz</td>
+            <td>Pudzianowski</td>
+            <td>TAK</td>
+            <td>11-11-2020</td>
+            <td>02-12-2020</td>
+            <td>21</td>
+            <td>
+                <ul class="list-actions">
+                    <li>
+                        <a class="list-actions-button-details" href="/collections-list/details">Szczegóły</a>
+                    </li>
+                    <li>
+                        <a class="list-actions-button-edit" href="/collections-list/modify">Edytuj</a>
+                    </li>
+                    <li>
+                        <a class="list-actions-button-delete" href="/collections-list/details">Usuń</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Beata</td>
+            <td>Tyszkiewicz</td>
+            <td>TAK</td>
+            <td>11-11-2020</td>
+            <td>25-11-2020</td>
+            <td>44</td>
+            <td>
+                <ul class="list-actions">
+                    <li>
+                        <a class="list-actions-button-details" href="/collections-list/details">Szczegóły</a>
+                    </li>
+                    <li>
+                        <a class="list-actions-button-edit" href="/collections-list/modify">Edytuj</a>
+                    </li>
+                    <li>
+                        <a class="list-actions-button-delete" href="/collections-list/details">Usuń</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<%- include('../../fragments/footer.ejs') %>
